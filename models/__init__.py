@@ -3,14 +3,23 @@ Models package for nanoGPT.
 
 A modular, interconnected model library with shared components and factory functions.
 
+Includes:
+- Base language models (GPT, MiniGPT)
+- Reasoning models with CoT and RLHF/ReFL support
+- Reward models for RLHF
+- Critique models for language feedback
+- Training utilities
+
 Usage:
     >>> from models import create_model, list_models
     >>> list_models()
-    >>> model = create_model('mini')  # or 'gpt2', 'small', etc.
+    >>> model = create_model('mini')  # or 'gpt2', 'reasoning', etc.
 
-    >>> # Direct imports
-    >>> from models import GPT, GPTConfig, MiniGPT, MiniGPTConfig
-    >>> from models import create_model, load_from_pretrained
+    >>> # RLHF/ReFL
+    >>> from models import ReasoningModel, RewardModel, PPOTrainer
+    >>> policy = ReasoningModel(config)
+    >>> reward_model = RewardModel(config)
+    >>> trainer = PPOTrainer(policy, reward_model)
 """
 
 # Base classes and registry
@@ -38,6 +47,44 @@ from .common import (
 # Model implementations
 from .mini_gpt import MiniGPT, MiniGPTConfig, create_mini_gpt, mini_gpt_from_pretrained
 from .gpt import GPT, GPTConfig, create_gpt, gpt_from_pretrained
+
+# RLHF/ReFL models
+from .reasoning import (
+    ReasoningModel,
+    ReasoningModelConfig,
+    ReasoningModelWithKL,
+    create_reasoning_model,
+    create_reasoning_model_from_pretrained,
+)
+from .reward import (
+    RewardModel,
+    RewardModelConfig,
+    PairwiseRewardModel,
+    EnsembleRewardModel,
+    create_reward_model,
+    create_reward_model_from_pretrained,
+    create_pairwise_reward_model,
+)
+from .critique import (
+    CritiqueModel,
+    CritiqueModelConfig,
+    ConstitutionalCritiqueModel,
+    create_critique_model,
+    create_critique_model_from_pretrained,
+    create_constitutional_critique_model,
+)
+
+# Training utilities
+from .training import (
+    PPOConfig,
+    ReFLConfig,
+    PPOTrainer,
+    ReFLTrainer,
+    RewardModelTrainer,
+    CritiqueModelTrainer,
+    create_ppo_trainer,
+    create_refl_trainer,
+)
 
 # Factory functions
 from .factory import (
@@ -77,6 +124,38 @@ __all__ = [
     'GPT',
     'GPTConfig',
 
+    # RLHF/ReFL models
+    'ReasoningModel',
+    'ReasoningModelConfig',
+    'ReasoningModelWithKL',
+    'create_reasoning_model',
+    'create_reasoning_model_from_pretrained',
+
+    'RewardModel',
+    'RewardModelConfig',
+    'PairwiseRewardModel',
+    'EnsembleRewardModel',
+    'create_reward_model',
+    'create_reward_model_from_pretrained',
+    'create_pairwise_reward_model',
+
+    'CritiqueModel',
+    'CritiqueModelConfig',
+    'ConstitutionalCritiqueModel',
+    'create_critique_model',
+    'create_critique_model_from_pretrained',
+    'create_constitutional_critique_model',
+
+    # Training
+    'PPOConfig',
+    'ReFLConfig',
+    'PPOTrainer',
+    'ReFLTrainer',
+    'RewardModelTrainer',
+    'CritiqueModelTrainer',
+    'create_ppo_trainer',
+    'create_refl_trainer',
+
     # Factory functions
     'create_model',
     'create_model_from_config',
@@ -91,4 +170,4 @@ __all__ = [
 ]
 
 # Version info
-__version__ = '0.1.0'
+__version__ = '0.2.0'
