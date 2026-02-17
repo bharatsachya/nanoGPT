@@ -1,12 +1,31 @@
-.DS_Store
-.idea
-.ipynb_checkpoints/
-.vscode
+# Intepreter and Environment
 __pycache__/
-*.bin
-*.pkl
-*.pt
-*.pyc
-input.txt
+*.py[cod]
+*$py.class
 env/
 venv/
+.env
+
+# Checkpoints and Models
+*.pt
+*.pth
+*.ckpt
+*.bin
+*.pkl
+
+# Logs and Output
+*.log
+out/
+wandb/
+runs/
+
+# Data
+input.txt
+data/**/*.bin
+
+# IDE and System Files
+.vscode/
+.idea/
+.DS_Store
+.ipynb_checkpoints/
+*.json
