@@ -5,21 +5,21 @@ A modular, interconnected model library with shared components and factory funct
 
 Includes:
 - Base language models (GPT, MiniGPT)
+- Modern LLMs (Mistral, LLaMA-style with RoPE, SwiGLU, GQA)
+- DeepSeek-style Mixture of Experts models
 - Reasoning models with CoT and RLHF/ReFL support
 - Reward models for RLHF
 - Critique models for language feedback
 - Training utilities
 
 Usage:
-    >>> from models import create_model, list_models
-    >>> list_models()
-    >>> model = create_model('mini')  # or 'gpt2', 'reasoning', etc.
+    >>> from models import create_model, list_models, create_mistral_model
+    >>> model = create_mistral_model('mistral-7b')
 
-    >>> # RLHF/ReFL
-    >>> from models import ReasoningModel, RewardModel, PPOTrainer
-    >>> policy = ReasoningModel(config)
-    >>> reward_model = RewardModel(config)
-    >>> trainer = PPOTrainer(policy, reward_model)
+    >>> # Available presets
+    >>> from models import MISTRAL_PRESETS
+    >>> print(list(MISTRAL_PRESETS.keys()))
+    ['mistral-7b', 'llama2-7b', 'llama3-8b', 'tiny-1b', ...]
 """
 
 # Base classes and registry
@@ -90,6 +90,23 @@ from .deepseek import (
     create_deepseek_model,
     create_deepseek_coder,
     create_deepseek_from_pretrained,
+)
+
+# Mistral / LLaMA-style models
+from .mistral import (
+    MistralModel,
+    MistralConfig,
+    MistralAttention,
+    MistralMLP,
+    MistralDecoderLayer,
+    MistralForCausalLM,
+    MistralForSequenceClassification,
+    MistralForTokenClassification,
+    repeat_kv,
+    create_mistral_model,
+    create_llama_model,
+    create_custom_model,
+    MODEL_PRESETS as MISTRAL_PRESETS,
 )
 
 # Training utilities
@@ -180,6 +197,21 @@ __all__ = [
     'create_deepseek_coder',
     'create_deepseek_from_pretrained',
 
+    # Mistral / LLaMA models
+    'MistralModel',
+    'MistralConfig',
+    'MistralAttention',
+    'MistralMLP',
+    'MistralDecoderLayer',
+    'MistralForCausalLM',
+    'MistralForSequenceClassification',
+    'MistralForTokenClassification',
+    'repeat_kv',
+    'create_mistral_model',
+    'create_llama_model',
+    'create_custom_model',
+    'MISTRAL_PRESETS',
+
     # Training
     'PPOConfig',
     'ReFLConfig',
@@ -204,4 +236,4 @@ __all__ = [
 ]
 
 # Version info
-__version__ = '0.3.0'
+__version__ = '0.4.0'
