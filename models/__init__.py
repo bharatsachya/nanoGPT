@@ -74,6 +74,24 @@ from .critique import (
     create_constitutional_critique_model,
 )
 
+# DeepSeek-style MoE models
+from .deepseek import (
+    DeepSeekModel,
+    DeepSeekCoderModel,
+    DeepSeekConfig,
+    Expert,
+    SharedExpert,
+    TopKRouter,
+    SoftRouter,
+    GumbelRouter,
+    MoE,
+    DeepSeekAttention,
+    DeepSeekBlock,
+    create_deepseek_model,
+    create_deepseek_coder,
+    create_deepseek_from_pretrained,
+)
+
 # Training utilities
 from .training import (
     PPOConfig,
@@ -146,6 +164,22 @@ __all__ = [
     'create_critique_model_from_pretrained',
     'create_constitutional_critique_model',
 
+    # DeepSeek models
+    'DeepSeekModel',
+    'DeepSeekCoderModel',
+    'DeepSeekConfig',
+    'Expert',
+    'SharedExpert',
+    'TopKRouter',
+    'SoftRouter',
+    'GumbelRouter',
+    'MoE',
+    'DeepSeekAttention',
+    'DeepSeekBlock',
+    'create_deepseek_model',
+    'create_deepseek_coder',
+    'create_deepseek_from_pretrained',
+
     # Training
     'PPOConfig',
     'ReFLConfig',
@@ -170,4 +204,4 @@ __all__ = [
 ]
 
 # Version info
-__version__ = '0.2.0'
+__version__ = '0.3.0'
